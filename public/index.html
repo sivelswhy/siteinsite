@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="fr">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Site in Site</title>
+		<link rel="icon" href="favicon.ico" />
+
+		<script src="/scram/scramjet.all.js"></script>
+		<script src="/baremux/index.js"></script>
+
+		<link rel="stylesheet" href="index.css" />
+		<script src="register-sw.js" defer></script>
+		<script src="index.js" defer></script>
+	</head>
+
+	<body>
+		<!-- Accueil : recherche + historique -->
+		<main id="home">
+			<h1 class="brand">Site<span>in</span>Site</h1>
+
+			<form id="search-form" class="search" autocomplete="off">
+				<select id="engine" aria-label="Moteur de recherche">
+					<option value="https://duckduckgo.com/?q=%s">DuckDuckGo</option>
+					<option value="https://www.google.com/search?q=%s">Google</option>
+					<option value="https://www.bing.com/search?q=%s">Bing</option>
+					<option value="https://www.qwant.com/?q=%s">Qwant</option>
+					<option value="https://www.ecosia.org/search?q=%s">Ecosia</option>
+					<option value="https://www.startpage.com/do/search?q=%s">Startpage</option>
+				</select>
+				<input
+					id="search-input"
+					type="text"
+					placeholder="Rechercher ou saisir une adresse"
+					autofocus
+				/>
+				<button type="submit">Aller</button>
+			</form>
+			<p id="error" class="error" hidden></p>
+
+			<section class="history">
+				<header>
+					<h2>Historique</h2>
+					<button id="history-clear" class="ghost" type="button">
+						Tout effacer
+					</button>
+				</header>
+				<ul id="history-list"></ul>
+				<p id="history-empty" class="muted">Aucune recherche pour l'instant.</p>
+			</section>
+
+			<footer>
+				Propulsé par
+				<a href="https://github.com/MercuryWorkshop/scramjet" target="_blank">Scramjet</a>
+				· <a href="credits.html">Licences</a>
+			</footer>
+		</main>
+
+		<!-- Navigateur intégré -->
+		<div id="browser" hidden>
+			<nav class="toolbar">
+				<button id="nav-home" title="Accueil" aria-label="Accueil">⌂</button>
+				<button id="nav-back" title="Précédent" aria-label="Précédent">←</button>
+				<button id="nav-forward" title="Suivant" aria-label="Suivant">→</button>
+				<button id="nav-reload" title="Recharger" aria-label="Recharger">↻</button>
+				<form id="address-form" autocomplete="off">
+					<input id="address" type="text" aria-label="Adresse" />
+				</form>
+			</nav>
+			<div id="frame-host"></div>
+		</div>
+	</body>
+</html>
