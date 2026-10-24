@@ -3,11 +3,12 @@
 import http from "node:http";
 import { server as wisp, logging } from "@mercuryworkshop/wisp-js/server";
 
-logging.set_level(logging.NONE);
+logging.set_level(logging.ERROR);
 Object.assign(wisp.options, {
 	allow_udp_streams: false,
 	hostname_blacklist: [/example\.com/],
-	dns_servers: ["1.1.1.3", "1.0.0.3"],
+	// les fonctions Vercel n'ont pas de sortie IPv6
+	dns_result_order: "ipv4first",
 });
 
 const server = http.createServer((req, res) => {
