@@ -1,9 +1,9 @@
-importScripts("/scram/scramjet.all.js");
+importScripts("scram/scramjet.all.js");
 
 const { ScramjetServiceWorker } = $scramjetLoadWorker();
 const scramjet = new ScramjetServiceWorker();
 
-const PREFIX = "/scramjet/";
+const PREFIX = new URL(self.registration.scope).pathname + "scramjet/";
 
 // Scramjet n'envoie pas de Referer lors d'une navigation (clic sur un lien) :
 // certains sites renvoient alors vers leur accueil au lieu de suivre le lien.

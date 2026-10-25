@@ -123,25 +123,34 @@ function toUrl(input) {
 // --- Scramjet ---
 
 const { ScramjetController } = $scramjetLoadController();
+// Chemins relatifs à la page : le site peut être servi à la racine (Vercel)
+// ou dans un sous-dossier (GitHub Pages : /siteinsite/)
+const base = new URL(".", location.href).pathname;
+
 const scramjet = new ScramjetController({
+	prefix: base + "scramjet/",
 	files: {
-		wasm: "/scram/scramjet.wasm.wasm",
-		all: "/scram/scramjet.all.js",
-		sync: "/scram/scramjet.sync.js",
+		wasm: base + "scram/scramjet.wasm.wasm",
+		all: base + "scram/scramjet.all.js",
+		sync: base + "scram/scramjet.sync.js",
 	},
 });
 scramjet.init();
 
-const connection = new BareMux.BareMuxConnection("/baremux/worker.js");
-const wispUrl =
-	(location.protocol === "https:" ? "wss" : "ws") + "://" + location.host + "/wisp/";
+const connection = new BareMux.BareMuxConnection(base + "baremux/worker.js");
+const transport = base + "libcurl/index.mjs";
+
+// GitHub Pages ne peut pas héberger le relais : on utilise celui de Vercel
+const wispUrl = location.hostname.endsWith("github.io")
+	? "wss://siteinsite.vercel.app/wisp/"
+	: (location.protocol === "https:" ? "wss" : "ws") + "://" + location.host + "/wisp/";
 
 let frame = null;
 
 async function ensureReady() {
 	await registerSW();
-	if ((await connection.getTransport()) !== "/libcurl/index.mjs") {
-		await connection.setTransport("/libcurl/index.mjs", [{ websocket: wispUrl }]);
+	if ((await connection.getTransport()) !== transport) {
+		await connection.setTransport(transport, [{ websocket: wispUrl }]);
 	}
 	if (!frame) {
 		frame = scramjet.createFrame();
