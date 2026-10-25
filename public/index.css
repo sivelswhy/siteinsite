@@ -262,3 +262,179 @@ footer {
 	border: 0;
 	background: #fff;
 }
+
+/* Raccourcis */
+.shortcuts h2 {
+	font-size: 1rem;
+	margin: 0 0 8px;
+}
+
+.tiles {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+	gap: 8px;
+}
+
+.tiles li {
+	position: relative;
+}
+
+.tile {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 6px;
+	padding: 12px 6px;
+	background: var(--surface);
+	border: 1px solid var(--border);
+	border-radius: 12px;
+	cursor: pointer;
+}
+
+.tile:hover {
+	border-color: var(--accent);
+}
+
+.tile .icon {
+	width: 36px;
+	height: 36px;
+	display: grid;
+	place-items: center;
+	border-radius: 50%;
+	background: color-mix(in srgb, var(--accent) 15%, transparent);
+	color: var(--accent);
+	font-weight: 600;
+}
+
+.tile .name {
+	max-width: 100%;
+	font-size: 0.85rem;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.tile.add {
+	border-style: dashed;
+	color: var(--muted);
+}
+
+.tile.add .icon {
+	background: none;
+	color: var(--muted);
+	font-size: 1.4rem;
+}
+
+.tiles .remove {
+	position: absolute;
+	top: 2px;
+	right: 2px;
+	padding: 2px 6px;
+	font-size: 0.75rem;
+	opacity: 0;
+}
+
+.tiles li:hover .remove,
+.tiles .remove:focus-visible {
+	opacity: 1;
+}
+
+@media (hover: none) {
+	.tiles .remove {
+		opacity: 1;
+	}
+}
+
+#nav-pin[aria-pressed="true"] {
+	color: var(--accent);
+}
+
+/* Chargement et erreurs */
+.progress {
+	height: 3px;
+	flex: none;
+	overflow: hidden;
+	background: color-mix(in srgb, var(--accent) 20%, transparent);
+}
+
+.progress::after {
+	content: "";
+	display: block;
+	width: 30%;
+	height: 100%;
+	background: var(--accent);
+	animation: progress 1.2s ease-in-out infinite;
+}
+
+@keyframes progress {
+	from {
+		transform: translateX(-100%);
+	}
+	to {
+		transform: translateX(340%);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.progress::after {
+		width: 100%;
+		animation: none;
+		opacity: 0.6;
+	}
+}
+
+.frame-status {
+	position: absolute;
+	z-index: 1;
+	top: 16px;
+	left: 50%;
+	transform: translateX(-50%);
+	width: min(480px, calc(100% - 32px));
+	padding: 16px;
+	background: var(--surface);
+	border: 1px solid var(--border);
+	border-radius: 12px;
+	box-shadow: 0 6px 24px rgb(0 0 0 / 0.15);
+}
+
+.frame-status p {
+	margin: 0 0 12px;
+	font-weight: 500;
+}
+
+.frame-status .actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.frame-status .actions button:not(.ghost) {
+	border: 1px solid var(--border);
+	background: var(--bg);
+	border-radius: 999px;
+	padding: 6px 14px;
+	cursor: pointer;
+}
+
+.frame-status .actions button:first-child {
+	background: var(--accent);
+	border-color: var(--accent);
+	color: #fff;
+}
+
+.frame-status details {
+	margin-top: 12px;
+	color: var(--muted);
+	font-size: 0.85rem;
+}
+
+.frame-status pre {
+	max-height: 160px;
+	overflow: auto;
+	white-space: pre-wrap;
+	word-break: break-word;
+}

@@ -35,11 +35,18 @@
 					id="search-input"
 					type="text"
 					placeholder="Rechercher ou saisir une adresse"
+					list="suggestions"
 					autofocus
 				/>
 				<button type="submit">Aller</button>
 			</form>
 			<p id="error" class="error" hidden></p>
+			<datalist id="suggestions"></datalist>
+
+			<section class="shortcuts">
+				<h2>Raccourcis</h2>
+				<ul id="shortcut-list" class="tiles"></ul>
+			</section>
 
 			<section class="history">
 				<header>
@@ -68,10 +75,32 @@
 				<button id="nav-forward" title="Suivant" aria-label="Suivant">→</button>
 				<button id="nav-reload" title="Recharger" aria-label="Recharger">↻</button>
 				<form id="address-form" autocomplete="off">
-					<input id="address" type="text" aria-label="Adresse" />
+					<input id="address" type="text" aria-label="Adresse" list="suggestions" />
 				</form>
+				<button
+					id="nav-pin"
+					title="Ajouter aux raccourcis"
+					aria-label="Ajouter aux raccourcis"
+					aria-pressed="false"
+				>
+					☆
+				</button>
 			</nav>
-			<div id="frame-host"></div>
+			<div id="progress" class="progress" hidden></div>
+			<div id="frame-host">
+				<div id="frame-status" class="frame-status" role="alert" hidden>
+					<p id="status-text"></p>
+					<div class="actions">
+						<button id="status-retry" type="button">Réessayer</button>
+						<button id="status-open" type="button">Ouvrir directement</button>
+						<button id="status-dismiss" class="ghost" type="button">Fermer</button>
+					</div>
+					<details id="status-details" hidden>
+						<summary>Détails techniques</summary>
+						<pre id="status-trace"></pre>
+					</details>
+				</div>
+			</div>
 		</div>
 	</body>
 </html>
